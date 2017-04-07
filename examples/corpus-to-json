@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-const path = require('path');
-
 const ezs = require('ezs');
 ezs.use(require('ezs-basics'));
 ezs.use(require('..'));

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -8,10 +7,10 @@ const ezs = require('ezs');
 ezs.use(require('ezs-basics'));
 ezs.use(require('..'));
 
-const input = path.resolve(__dirname,'./queries/input.tsv')
+const input = path.resolve(__dirname, './queries/input.tsv');
 
 fs.createReadStream(input)
-  .pipe(ezs('CSVParse', { separator: "\t" }))
+  .pipe(ezs('CSVParse', { separator: '\t' }))
   .pipe(ezs('CSVObject'))
   .pipe(ezs('ISTEXQuery'))
   .pipe(ezs('ISTEXHarvest'))
