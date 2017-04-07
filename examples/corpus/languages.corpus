@@ -1,0 +1,12 @@
+#
+# Fichier corpus pour les langues de publication
+#
+title        Langues de publication
+author       François
+publisher    CNRS
+description  Ensemble de requetes par langue
+licence      CC-By
+versionInfo  1
+
+[ISTEX]
+query  language.raw:("rus")
