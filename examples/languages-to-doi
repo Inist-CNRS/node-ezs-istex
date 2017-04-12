@@ -17,7 +17,11 @@ process.stdin
   .pipe(ezs('ISTEXRequest'))
   .pipe(ezs('ISTEXHits'))
   .pipe(ezs('flatten'))
-  .pipe(ezs('triplify', { property: 'http://purl.org/ontology/bibo/doi' }))
+  .pipe(ezs('triplify', {/* property: 'http://purl.org/ontology/bibo/doi',*/
+    properties: {
+      'ISTEX/doi/': 'http://purl.org/ontology/bibo/doi',
+      'ISTEX/language/': 'http://purl.org/dc/terms/language'
+    } }))
   // .pipe(ezs('jsonify'))
   .pipe(process.stdout)
 ;
