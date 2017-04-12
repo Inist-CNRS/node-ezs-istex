@@ -20,7 +20,7 @@ process.stdin
   .pipe(ezs('triplify', {/* property: 'http://purl.org/ontology/bibo/doi',*/
     properties: {
       'ISTEX/doi/': 'http://purl.org/ontology/bibo/doi',
-      'ISTEX/language/': 'http://purl.org/dc/terms/language'
+      'ISTEX/language/': 'http://purl.org/dc/terms/language',
     } }))
   // .pipe(ezs('jsonify'))
   .pipe(process.stdout)
