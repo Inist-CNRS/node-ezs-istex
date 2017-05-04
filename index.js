@@ -7,5 +7,6 @@ module.exports = {
   ISTEXHits: require('./lib/hits.js'),
   ISTEXMods: require('./lib/mods.js'),
   ISTEXParseXML: require('./lib/parse-xml.js'),
+  ISTEXScroll: require('./lib/scroll.js'),
   triplify: require('./lib/triplify.js'),
 };
