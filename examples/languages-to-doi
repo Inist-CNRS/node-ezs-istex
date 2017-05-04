@@ -4,7 +4,7 @@ const ezs = require('ezs');
 ezs.use(require('ezs-basics'));
 ezs.use(require('..'));
 
-const output = 'language.raw,doi,id';
+const output = 'language,doi,id';
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
@@ -12,9 +12,10 @@ process.stdin
   .pipe(ezs('stringify'))
   // .pipe(ezs('concat'))
   .pipe(ezs('ISTEXCorpus'))
-  .pipe(ezs('ISTEXQuery', { params: { output } }))
-  .pipe(ezs('ISTEXHarvest'))
-  .pipe(ezs('ISTEXRequest'))
+  .pipe(ezs('ISTEXQuery', { params: { output, }, }))
+  // .pipe(ezs('ISTEXHarvest'))
+  // .pipe(ezs('ISTEXRequest'))
+  .pipe(ezs('ISTEXScroll'))
   .pipe(ezs('ISTEXHits'))
   .pipe(ezs('flatten'))
   .pipe(ezs('triplify', {
@@ -27,7 +28,8 @@ process.stdin
         /([a-z]{3})/,
         '<http://lexvo.org/id/iso639-3/$1>',
       ],
-    } }))
+    },
+  }))
   // .pipe(ezs('jsonify'))
   .pipe(process.stdout)
 ;
