@@ -9,4 +9,5 @@ module.exports = {
   ISTEXParseXML: require('./lib/parse-xml.js'),
   ISTEXScroll: require('./lib/scroll.js'),
   ISTEXTriplify: require('./lib/triplify.js'),
+  ISTEXFulltext: require('./lib/get-fulltext.js'),
 };
