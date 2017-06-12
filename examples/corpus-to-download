@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+
+const ezs = require('ezs');
+ezs.use(require('ezs-basics'));
+ezs.use(require('..'));
+
+const output = 'id'
+             + ',fulltext,enrichments,metadata';
+
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+process.stdin
+  .pipe(ezs('stringify'))
+  // .pipe(ezs('concat'))
+  .pipe(ezs('ISTEXCorpus'))
+  .pipe(ezs('ISTEXQuery', { params: { output } }))
+  .pipe(ezs('ISTEXHarvest'))
+  .pipe(ezs('ISTEXRequest'))
+  .pipe(ezs('ISTEXDownload', {
+    criteria: {
+      "extension": "tei",
+      "original": false,
+      "mimetype": "application/tei+xml"
+    },
+    out: "./",
+    key: "nb"
+  }))
+  .pipe(ezs('jsonify'))
+  .pipe(process.stdout)
+;
+

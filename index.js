@@ -6,6 +6,7 @@ module.exports = {
   ISTEXRequest: require('./lib/request.js'),
   ISTEXHits: require('./lib/hits.js'),
   ISTEXMods: require('./lib/mods.js'),
+  ISTEXDownload: require('./lib/download.js'),
   ISTEXParseXML: require('./lib/parse-xml.js'),
   ISTEXScroll: require('./lib/scroll.js'),
   ISTEXTriplify: require('./lib/triplify.js'),
