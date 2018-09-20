@@ -1,25 +1,8 @@
 import { contains } from 'ramda';
+import { getTriple } from './utils';
 
 const triples = {};
 const previous = {};
-
-// TODO: mutualize getTriple (see ISTEXRemoveIf)
-function getTriple(line) {
-    let [subject, verb, complement] = line.split('> ', 3);
-    subject += '>';
-    verb += '>';
-    if (complement === '.\n') {
-        // In the case of a verb badly parsed (ex: <uri1> a <uri2>)
-        [verb, complement] = verb.split(' ', 2);
-    } else if (!complement.endsWith('" .\n')) {
-        // In the case of an URI, split removed the end of the complement
-        complement += '>';
-    } else /* if (complement.endsWith(' .\n')) */ {
-        // In the normal case
-        complement = complement.slice(0, -3); // Remove " .\n"
-    }
-    return [subject, verb, complement];
-}
 
 function ISTEXRemoveVerb(data, feed) {
     const verbToRemove = this.getParam('verb', '');
