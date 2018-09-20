@@ -8,6 +8,7 @@ import ISTEXParseDotCorpus from './istex-parse-dot-corpus';
 import ISTEXTriplify from './istex-triplify';
 import ISTEXRemoveIf from './remove-if';
 import ISTEXRemoveVerb from './remove-verb';
+import ISTEXUniq from './uniq';
 
 export default {
     ISTEX,
@@ -20,4 +21,5 @@ export default {
     ISTEXTriplify,
     ISTEXRemoveIf,
     ISTEXRemoveVerb,
+    ISTEXUniq,
 };
