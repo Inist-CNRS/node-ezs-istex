@@ -35,7 +35,7 @@ ezs.use(require('ezs-istex'));
 -   [remove-if](#remove-if)
     -   [Parameters](#parameters-8)
     -   [Examples](#examples-1)
--   [remove-verb](#remove-verb)
+-   [ISTEXRemoveVerb](#istexremoveverb)
     -   [Parameters](#parameters-9)
     -   [Examples](#examples-2)
 
@@ -239,7 +239,7 @@ remove = <host/genre>
 <https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
 ```
 
-### remove-verb
+### ISTEXRemoveVerb
 
 Unconditionnaly remove triples which `verb` is given.
 

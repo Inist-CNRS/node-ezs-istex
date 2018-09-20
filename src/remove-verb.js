@@ -53,6 +53,7 @@ function ISTEXRemoveVerb(data, feed) {
 /**
  * Unconditionnaly remove triples which `verb` is given.
  *
+ * @name ISTEXRemoveVerb
  * @param {string} verb   `"<https://data.istex.fr/ontology/istex#idIstex>"`
  *
  * @example
