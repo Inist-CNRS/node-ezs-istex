@@ -61,6 +61,7 @@ function ISTEXRemoveIf(data, feed) {
  * Remove triples which properties are given (`remove`) if other given `property`
  * has the given `value`.
  *
+ * @name ISTEXRemoveIf
  * @param {string} if   "property = value"
  * @param {Array<string></string>} remove    list of properties to remove
  *
