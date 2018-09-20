@@ -818,4 +818,81 @@ describe('test', () => {
                 done();
             });
     }).timeout(5000);
+
+    describe('ISTEXRemoveVerb', () => {
+        it('should remove the triple including the verb', (done) => {
+            let result = [];
+            from([
+                '<subject> <verb> <complement>',
+            ])
+                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 0);
+                    done();
+                });
+        });
+
+        it('should remove the triple among two including the verb', (done) => {
+            let result = [];
+            from([
+                '<subject> <verb> <complement> .',
+                '<subject> <verb2> <complement> .',
+            ])
+                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 1);
+                    assert.equal(result[0], '<subject> <verb2> <complement> .\n');
+                    done();
+                });
+        });
+
+        it('should not remove any triple when the verb is not present', (done) => {
+            let result = [];
+            from([
+                '<subject> <verb1> <complement> .',
+                '<subject> <verb2> <complement> .',
+            ])
+                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 2);
+                    assert.equal(result[0], '<subject> <verb1> <complement> .\n');
+                    assert.equal(result[1], '<subject> <verb2> <complement> .\n');
+                    done();
+                });
+        });
+
+        it('should remove all triples containing the verb', (done) => {
+            let result = [];
+            from([
+                '<subject> <verb> <complement> .',
+                '<subject> <verb1> <complement> .',
+                '<subject> <verb> <complement> .',
+                '<subject> <verb2> <complement> .',
+                '<subject> <verb> <complement> .',
+            ])
+                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 2);
+                    assert.equal(result[0], '<subject> <verb1> <complement> .\n');
+                    assert.equal(result[1], '<subject> <verb2> <complement> .\n');
+                    done();
+                });
+        });
+    });
 });
