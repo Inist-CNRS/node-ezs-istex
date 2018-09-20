@@ -6,7 +6,6 @@ let previous;
 
 function ISTEXUniq(data, feed) {
     function writeFilteredTriples() {
-        // triples = triples.filter(triple => !contains(triple.verb, verbToRemove));
         triples.reduce((alreadySeen, t) => {
             if (!alreadySeen.find(equals(t))) {
                 feed.write(`${t.subject} ${t.verb} ${t.complement} .\n`);
