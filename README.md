@@ -245,7 +245,7 @@ Unconditionnaly remove triples which `verb` is given.
 
 #### Parameters
 
--   `verb` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** "<https://data.istex.fr/ontology/istex#idIstex>"
+-   `verb` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** `"<https://data.istex.fr/ontology/istex#idIstex>"`
 
 #### Examples
 

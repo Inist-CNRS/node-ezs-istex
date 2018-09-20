@@ -3,6 +3,7 @@ import { contains } from 'ramda';
 const triples = {};
 const previous = {};
 
+// TODO: mutualize getTriple (see ISTEXRemoveIf)
 function getTriple(line) {
     let [subject, verb, complement] = line.split('> ', 3);
     subject += '>';
@@ -52,7 +53,7 @@ function ISTEXRemoveVerb(data, feed) {
 /**
  * Unconditionnaly remove triples which `verb` is given.
  *
- * @param {string} verb   "<https://data.istex.fr/ontology/istex#idIstex>"
+ * @param {string} verb   `"<https://data.istex.fr/ontology/istex#idIstex>"`
  *
  * @example
  * <https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/ontology/istex#idIstex> "2FF3F5B1477986B9C617BB75CA3333DBEE99EB05" .
