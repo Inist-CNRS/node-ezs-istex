@@ -6,11 +6,11 @@ import fetch from 'omni-fetch';
 /**
  * Take an `Object` containing a query and outputs records from the ISTEX API.
  *
- * @param {string} query    ISTEX query
+ * @param {string} [query="*"]          ISTEX query
  * @param {string} [sid="ezs-istex"]    User-agent identifier
- * @param {number} maxPage  Maximum number of pages to get
- * @param {number} [size=2000]  size of each page of results
- * @param {string} [duration="30s"] maximum duration between two requests
+ * @param {number} maxPage              Maximum number of pages to get
+ * @param {number} [size=2000]          size of each page of results
+ * @param {string} [duration="30s"]     maximum duration between two requests
  * @param {Array<string>} [field=["doi"]]   fields to get
  * @returns {Array<Object>}
  */
@@ -18,7 +18,7 @@ async function Scroll(data, feed) {
     if (this.isLast()) {
         return feed.close();
     }
-    const query = this.getParam('query');
+    const query = this.getParam('query', '*');
     const sid = this.getParam('sid', 'ezs-istex');
     const maxPage = Number(this.getParam('maxPage'));
     const size = Number(this.getParam('size', 2000));
