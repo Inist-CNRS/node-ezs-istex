@@ -1,4 +1,5 @@
 /* eslint-disable no-await-in-loop */
+import URL from 'url';
 import QueryString from 'qs';
 import fetch from 'omni-fetch';
 
@@ -13,7 +14,7 @@ import fetch from 'omni-fetch';
  * @param {Array<string>} [field=["doi"]]   fields to get
  * @returns {Array<Object>}
  */
-async function ISTEXScroll(data, feed) {
+async function Scroll(data, feed) {
     if (this.isLast()) {
         return feed.close();
     }
@@ -69,5 +70,5 @@ async function ISTEXScroll(data, feed) {
 }
 
 export default {
-    ISTEXScroll,
+    Scroll,
 };
