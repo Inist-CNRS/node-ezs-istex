@@ -14,7 +14,7 @@ import fetch from 'omni-fetch';
  * @param {Array<string>} [field=["doi"]]   fields to get
  * @returns {Array<Object>}
  */
-async function Scroll(data, feed) {
+async function ISTEXScroll(data, feed) {
     if (this.isLast()) {
         return feed.close();
     }
@@ -76,5 +76,5 @@ async function Scroll(data, feed) {
 }
 
 export default {
-    Scroll,
+    ISTEXScroll,
 };

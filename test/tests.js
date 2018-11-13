@@ -104,7 +104,7 @@ describe('test', () => {
         from([
             'this is an test',
         ])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 2,
                 sid: 'test',
             }))
@@ -124,7 +124,7 @@ describe('test', () => {
     it('ISTEXTriplify #1', (done) => {
         const result = [];
         from(['ezs'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 1,
                 sid: 'test',
             }))
@@ -153,7 +153,7 @@ describe('test', () => {
     it('ISTEXTriplify #2', (done) => {
         const result = [];
         from(['ezs'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 1,
                 sid: 'test',
                 field: 'author',
@@ -184,7 +184,7 @@ describe('test', () => {
     it('ISTEXTriplify #3', (done) => {
         const result = [];
         from(['language.raw:rum'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 1,
                 sid: 'test',
                 field: 'fulltext',
@@ -217,7 +217,7 @@ describe('test', () => {
     it('ISTEXTriplify #4', (done) => {
         const result = [];
         from(['language.raw:rum'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 1,
                 sid: 'test',
                 field: 'fulltext',
@@ -826,11 +826,11 @@ describe('ISTEXParseDotCorpus', () => {
     }).timeout(5000);
 });
 
-describe('Scroll', () => {
+describe('ISTEXScroll', () => {
     it('should respect maxPage', (done) => {
         const result = [];
         from(['this is a test'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 2,
                 size: 1,
                 sid: 'test',
@@ -850,7 +850,7 @@ describe('Scroll', () => {
     it('should execute queries from input', (done) => {
         const result = [];
         from(['ezs', 'test'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 maxPage: 1,
                 size: 1,
                 sid: 'test',
@@ -870,7 +870,7 @@ describe('Scroll', () => {
     it('should reply even only one result', (done) => {
         const result = [];
         from(['language.raw:rum'])
-            .pipe(ezs('Scroll', {
+            .pipe(ezs('ISTEXScroll', {
                 sid: 'test',
             }))
             .on('data', (chunk) => {
