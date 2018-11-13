@@ -11,8 +11,9 @@ ezs.use(require('ezs-basics'));
 if (token) {
     console.warn('Using ISTEX_TOKEN', token);
 }
-describe('test', () => {
-    it('ISTEXSave #0', (done) => {
+
+describe('ISTEXSave', () => {
+    it('should get the right PDFs', (done) => {
         const result = [];
         from([
             {
@@ -39,11 +40,14 @@ describe('test', () => {
             .on('end', () => {
                 assert.equal(result.length, 2);
                 assert(result[0].includes('QHD-T00H6VNF-0'));
+                assert(result[0].endsWith('.pdf'));
                 done();
             });
     }).timeout(5000);
+});
 
-    it('ISTEXFetch #0', (done) => {
+describe('ISTEXFetch', () => {
+    it('should get the right metadata', (done) => {
         const result = [];
         from([
             {
@@ -71,7 +75,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXFetch #1', (done) => {
+    it('should return an error when the ID does not exist', (done) => {
         const result = [];
         from([
             {
@@ -98,7 +102,9 @@ describe('test', () => {
                 done();
             });
     }).timeout(5000);
+});
 
+describe('ISTEXResult', () => {
     it('ISTEXResult #1', (done) => {
         const result = [];
         from([
@@ -120,8 +126,10 @@ describe('test', () => {
                 done();
             });
     }).timeout(5000);
+});
 
-    it('ISTEXTriplify #1', (done) => {
+describe('ISTEXTriplify', () => {
+    it('should return triples, rdfs:type and identifier', (done) => {
         const result = [];
         from(['ezs'])
             .pipe(ezs('ISTEXScroll', {
@@ -150,7 +158,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #2', (done) => {
+    it('should not return triples containing undefined', (done) => {
         const result = [];
         from(['ezs'])
             .pipe(ezs('ISTEXScroll', {
@@ -181,7 +189,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #3', (done) => {
+    it('should return URLs in angle brackets', (done) => {
         const result = [];
         from(['language.raw:rum'])
             .pipe(ezs('ISTEXScroll', {
@@ -214,7 +222,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #4', (done) => {
+    it('should begin each subject with <https://api.istex.fr/ark:/', (done) => {
         const result = [];
         from(['language.raw:rum'])
             .pipe(ezs('ISTEXScroll', {
@@ -246,7 +254,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #5', (done) => {
+    it('should not yield undefined values', (done) => {
         const result = [];
         from([
             {
@@ -272,7 +280,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #6', (done) => {
+    it('should yield as many triples as properties', (done) => {
         const result = [];
         from([
             {
@@ -299,7 +307,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #7', (done) => {
+    it('should yield matching properties', (done) => {
         const result = [];
         from([
             {
@@ -322,7 +330,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXTriplify #8', (done) => {
+    it('should not yield triples including "undefined"', (done) => {
         const result = [];
         from([
             {
@@ -347,8 +355,10 @@ describe('test', () => {
                 done();
             });
     }).timeout(5000);
+});
 
-    it('ISTEXRemoveIf #0', (done) => {
+describe('ISTEXRemoveIf', () => {
+    it('should remove only asked properties', (done) => {
         let result = [];
         const corpus = fs.readFileSync(path.resolve(__dirname,
             './1notice.corpus'));
@@ -384,7 +394,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXRemoveIf #1', (done) => {
+    it('should not remove any triple when none has to be', (done) => {
         let result = [];
         from([
             '<https://api.istex.fr/ark:/67375/HXZ-PTF2CVH1-4> <https://data.istex.fr/fake#seriesTitle> "Annals of Botany" .\n',
@@ -409,7 +419,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXRemoveIf #2', (done) => {
+    it('should not remove any triple when none has to be (3)', (done) => {
         let result = [];
         from([
             '<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/bibo/Document> .\n',
@@ -435,7 +445,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXRemoveIf #3', (done) => {
+    it('should be present several times in the stream', (done) => {
         let result = [];
         from([
             '<https://api.istex.fr/ark:/67375/P0J-GTV59GTP-D> <host/genre> "book-series" .\n',
@@ -475,7 +485,7 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXRemoveIf #4', (done) => {
+    it('should distinguish documents', (done) => {
         // When one document has a host/genre of "journal" and is followed by a
         // document of host/genre "book-series", and applying two RemoveIf, no
         // title remains.
@@ -542,7 +552,7 @@ describe('test', () => {
 });
 
 describe('ISTEX', () => {
-    it('ISTEX #0', (done) => {
+    it('should apply query once per input', (done) => {
         const result = [];
         from([1, 2])
             .pipe(ezs('ISTEX', {
@@ -562,7 +572,7 @@ describe('ISTEX', () => {
             });
     }).timeout(5000);
 
-    it('ISTEX #1', (done) => {
+    it('should get identified docs once per input', (done) => {
         const result = [];
         from([1, 2])
             .pipe(ezs('ISTEX', {
@@ -582,7 +592,7 @@ describe('ISTEX', () => {
             });
     }).timeout(5000);
 
-    it('ISTEX #2', (done) => {
+    it('should apply query & id once per input', (done) => {
         const result = [];
         from([1, 2])
             .pipe(ezs('ISTEX', {
