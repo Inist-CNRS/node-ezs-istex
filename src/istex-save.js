@@ -50,7 +50,7 @@ function ISTEXSave(data, feed) {
         headers.Authorization = `Bearer ${token}`;
     }
     if (!data.hits && !data.arkIstex) {
-        throw new Error('[ISTEXFetch] or [ISTEXSearch] should be defined before this statement.');
+        throw new Error('[ISTEXFetch] or [ISTEXScroll] should be defined before this statement.');
     }
     if (!format && !typology) {
         throw new Error('typology= & format= must be defined as parameter.');
