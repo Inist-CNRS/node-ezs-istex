@@ -18,7 +18,7 @@ async function Scroll(data, feed) {
     if (this.isLast()) {
         return feed.close();
     }
-    const query = this.getParam('query', '*');
+    const query = this.getParam('query') || data;
     const sid = this.getParam('sid', 'ezs-istex');
     const maxPage = Number(this.getParam('maxPage'));
     const size = Number(this.getParam('size', 2000));

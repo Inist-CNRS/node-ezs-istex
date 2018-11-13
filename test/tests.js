@@ -43,104 +43,6 @@ describe('test', () => {
             });
     }).timeout(5000);
 
-    it('ISTEXParseDotCorpus #0', (done) => {
-        const result = [];
-        const corpus = fs.readFileSync(path.resolve(__dirname, './1notice.corpus'));
-        from([
-            corpus.toString(),
-        ])
-            .pipe(ezs('ISTEXParseDotCorpus'))
-            .on('data', (chunk) => {
-                result.push(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 1);
-                assert(result[0]);
-                assert.equal(result[0].publisher, 'CNRS');
-                assert.equal(result[0].id, '2FF3F5B1477986B9C617BB75CA3333DBEE99EB05');
-                done();
-            });
-    }).timeout(5000);
-
-    it('ISTEXParseDotCorpus #1', (done) => {
-        const result = [];
-        const corpus = fs.readFileSync(path.resolve(__dirname, './1query.corpus'));
-        from([
-            corpus.toString(),
-        ])
-            .pipe(ezs('ISTEXParseDotCorpus'))
-            .on('data', (chunk) => {
-                result.push(chunk);
-            })
-            .on('end', () => {
-                assert(result.length > 0);
-                assert(result[0]);
-                assert.equal(result[0].publisher, 'CNRS');
-                done();
-            });
-    }).timeout(5000);
-
-    it('ISTEX #0', (done) => {
-        const result = [];
-        from([1, 2])
-            .pipe(ezs('ISTEX', {
-                query: 'this is an test',
-                size: 3,
-                maxPage: 1,
-                sid: 'test',
-            }))
-            .on('data', (chunk) => {
-                result.push(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 6);
-                assert(result[0]);
-                assert.equal(result[0].id, result[3].id);
-                done();
-            });
-    }).timeout(5000);
-
-    it('ISTEX #1', (done) => {
-        const result = [];
-        from([1, 2])
-            .pipe(ezs('ISTEX', {
-                id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
-                size: 3,
-                maxPage: 1,
-                sid: 'test',
-            }))
-            .on('data', (chunk) => {
-                result.push(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 2);
-                assert(result[0]);
-                assert.equal(result[0].id, result[1].id);
-                done();
-            });
-    }).timeout(5000);
-
-    it('ISTEX #2', (done) => {
-        const result = [];
-        from([1, 2])
-            .pipe(ezs('ISTEX', {
-                query: 'this is an test',
-                id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
-                size: 3,
-                maxPage: 1,
-                sid: 'test',
-            }))
-            .on('data', (chunk) => {
-                result.push(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 8);
-                assert(result[0]);
-                assert.equal(result[0].id, result[4].id);
-                done();
-            });
-    }).timeout(6000);
-
     it('ISTEXFetch #0', (done) => {
         const result = [];
         from([
@@ -867,173 +769,277 @@ describe('test', () => {
                 done();
             });
     }).timeout(5000);
+});
 
-    describe('ISTEXRemoveVerb', () => {
-        it('should remove the triple including the verb', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb> <complement>',
-            ])
-                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 0);
-                    done();
-                });
-        });
+describe('ISTEX', () => {
+    it('ISTEX #0', (done) => {
+        const result = [];
+        from([1, 2])
+            .pipe(ezs('ISTEX', {
+                query: 'this is an test',
+                size: 3,
+                maxPage: 1,
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 6);
+                assert(result[0]);
+                assert.equal(result[0].id, result[3].id);
+                done();
+            });
+    }).timeout(5000);
 
-        it('should remove the triple among two including the verb', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb> <complement> .',
-                '<subject> <verb2> <complement> .',
-            ])
-                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 1);
-                    assert.equal(result[0], '<subject> <verb2> <complement> .\n');
-                    done();
-                });
-        });
+    it('ISTEX #1', (done) => {
+        const result = [];
+        from([1, 2])
+            .pipe(ezs('ISTEX', {
+                id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
+                size: 3,
+                maxPage: 1,
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert(result[0]);
+                assert.equal(result[0].id, result[1].id);
+                done();
+            });
+    }).timeout(5000);
 
-        it('should not remove any triple when the verb is not present', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb1> <complement> .',
-                '<subject> <verb2> <complement> .',
-            ])
-                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 2);
-                    assert.equal(result[0], '<subject> <verb1> <complement> .\n');
-                    assert.equal(result[1], '<subject> <verb2> <complement> .\n');
-                    done();
-                });
-        });
+    it('ISTEX #2', (done) => {
+        const result = [];
+        from([1, 2])
+            .pipe(ezs('ISTEX', {
+                query: 'this is an test',
+                id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
+                size: 3,
+                maxPage: 1,
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 8);
+                assert(result[0]);
+                assert.equal(result[0].id, result[4].id);
+                done();
+            });
+    }).timeout(6000);
+});
 
-        it('should remove all triples containing the verb', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb> <complement> .',
-                '<subject> <verb1> <complement> .',
-                '<subject> <verb> <complement> .',
-                '<subject> <verb2> <complement> .',
-                '<subject> <verb> <complement> .',
-            ])
-                .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 2);
-                    assert.equal(result[0], '<subject> <verb1> <complement> .\n');
-                    assert.equal(result[1], '<subject> <verb2> <complement> .\n');
-                    done();
-                });
-        });
+describe('ISTEXRemoveVerb', () => {
+    it('should remove the triple including the verb', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb> <complement>',
+        ])
+            .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 0);
+                done();
+            });
     });
 
-    describe('ISTEXUniq', () => {
-        it('should remove identical lines one after another', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb> <complement> .',
-                '<subject> <verb> <complement> .',
-            ])
-                .pipe(ezs('ISTEXUniq'))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 1);
-                    assert.equal(result[0], '<subject> <verb> <complement> .\n');
-                    done();
-                });
-        });
-
-        it('should remove identical lines even if not following one another', (done) => {
-            let result = [];
-            from([
-                '<subject> <verb> <complement> .',
-                '<subject> <verb2> <complement2> .',
-                '<subject> <verb> <complement> .',
-            ])
-                .pipe(ezs('ISTEXUniq'))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 2);
-                    assert.equal(result[0], '<subject> <verb> <complement> .\n');
-                    assert.equal(result[1], '<subject> <verb2> <complement2> .\n');
-                    done();
-                });
-        });
-
-        it('should remove identical lines in two different subjects', (done) => {
-            let result = [];
-            from([
-                '<subject1> <verb> <complement> .',
-                '<subject1> <verb2> <complement2> .',
-                '<subject1> <verb> <complement> .',
-                '<subject2> <verb> <complement> .',
-                '<subject2> <verb2> <complement2> .',
-                '<subject2> <verb> <complement> .',
-            ])
-                .pipe(ezs('ISTEXUniq'))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 4);
-                    assert.equal(result[0], '<subject1> <verb> <complement> .\n');
-                    assert.equal(result[1], '<subject1> <verb2> <complement2> .\n');
-                    assert.equal(result[2], '<subject2> <verb> <complement> .\n');
-                    assert.equal(result[3], '<subject2> <verb2> <complement2> .\n');
-                    done();
-                });
-        });
-
-        it('should remove identical lines in two different subjects when verbs are different', (done) => {
-            let result = [];
-            from([
-                '<subject1> <verb> <complement> .',
-                '<subject1> <verb2> <complement2> .',
-                '<subject1> <verb> <complement> .',
-                '<subject2> <verb2> <complement> .',
-                '<subject2> <verb> <complement2> .',
-                '<subject2> <verb2> <complement> .',
-            ])
-                .pipe(ezs('ISTEXUniq'))
-                // .pipe(ezs('debug'))
-                .on('data', (chunk) => {
-                    result = result.concat(chunk);
-                })
-                .on('end', () => {
-                    assert.equal(result.length, 4);
-                    assert.equal(result[0], '<subject1> <verb> <complement> .\n');
-                    assert.equal(result[1], '<subject1> <verb2> <complement2> .\n');
-                    assert.equal(result[2], '<subject2> <verb2> <complement> .\n');
-                    assert.equal(result[3], '<subject2> <verb> <complement2> .\n');
-                    done();
-                });
-        });
+    it('should remove the triple among two including the verb', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb> <complement> .',
+            '<subject> <verb2> <complement> .',
+        ])
+            .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(result[0], '<subject> <verb2> <complement> .\n');
+                done();
+            });
     });
+
+    it('should not remove any triple when the verb is not present', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb1> <complement> .',
+            '<subject> <verb2> <complement> .',
+        ])
+            .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(result[0], '<subject> <verb1> <complement> .\n');
+                assert.equal(result[1], '<subject> <verb2> <complement> .\n');
+                done();
+            });
+    });
+
+    it('should remove all triples containing the verb', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb> <complement> .',
+            '<subject> <verb1> <complement> .',
+            '<subject> <verb> <complement> .',
+            '<subject> <verb2> <complement> .',
+            '<subject> <verb> <complement> .',
+        ])
+            .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(result[0], '<subject> <verb1> <complement> .\n');
+                assert.equal(result[1], '<subject> <verb2> <complement> .\n');
+                done();
+            });
+    });
+});
+
+describe('ISTEXUniq', () => {
+    it('should remove identical lines one after another', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb> <complement> .',
+            '<subject> <verb> <complement> .',
+        ])
+            .pipe(ezs('ISTEXUniq'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(result[0], '<subject> <verb> <complement> .\n');
+                done();
+            });
+    });
+
+    it('should remove identical lines even if not following one another', (done) => {
+        let result = [];
+        from([
+            '<subject> <verb> <complement> .',
+            '<subject> <verb2> <complement2> .',
+            '<subject> <verb> <complement> .',
+        ])
+            .pipe(ezs('ISTEXUniq'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(result[0], '<subject> <verb> <complement> .\n');
+                assert.equal(result[1], '<subject> <verb2> <complement2> .\n');
+                done();
+            });
+    });
+
+    it('should remove identical lines in two different subjects', (done) => {
+        let result = [];
+        from([
+            '<subject1> <verb> <complement> .',
+            '<subject1> <verb2> <complement2> .',
+            '<subject1> <verb> <complement> .',
+            '<subject2> <verb> <complement> .',
+            '<subject2> <verb2> <complement2> .',
+            '<subject2> <verb> <complement> .',
+        ])
+            .pipe(ezs('ISTEXUniq'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 4);
+                assert.equal(result[0], '<subject1> <verb> <complement> .\n');
+                assert.equal(result[1], '<subject1> <verb2> <complement2> .\n');
+                assert.equal(result[2], '<subject2> <verb> <complement> .\n');
+                assert.equal(result[3], '<subject2> <verb2> <complement2> .\n');
+                done();
+            });
+    });
+
+    it('should remove identical lines in two different subjects when verbs are different', (done) => {
+        let result = [];
+        from([
+            '<subject1> <verb> <complement> .',
+            '<subject1> <verb2> <complement2> .',
+            '<subject1> <verb> <complement> .',
+            '<subject2> <verb2> <complement> .',
+            '<subject2> <verb> <complement2> .',
+            '<subject2> <verb2> <complement> .',
+        ])
+            .pipe(ezs('ISTEXUniq'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 4);
+                assert.equal(result[0], '<subject1> <verb> <complement> .\n');
+                assert.equal(result[1], '<subject1> <verb2> <complement2> .\n');
+                assert.equal(result[2], '<subject2> <verb2> <complement> .\n');
+                assert.equal(result[3], '<subject2> <verb> <complement2> .\n');
+                done();
+            });
+    });
+});
+
+describe('ISTEXParseDotCorpus', () => {
+    it('ISTEXParseDotCorpus #0', (done) => {
+        const result = [];
+        const corpus = fs.readFileSync(path.resolve(__dirname, './1notice.corpus'));
+        from([
+            corpus.toString(),
+        ])
+            .pipe(ezs('ISTEXParseDotCorpus'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert(result[0]);
+                assert.equal(result[0].publisher, 'CNRS');
+                assert.equal(result[0].id, '2FF3F5B1477986B9C617BB75CA3333DBEE99EB05');
+                done();
+            });
+    }).timeout(5000);
+
+    it('ISTEXParseDotCorpus #1', (done) => {
+        const result = [];
+        const corpus = fs.readFileSync(path.resolve(__dirname, './1query.corpus'));
+        from([
+            corpus.toString(),
+        ])
+            // .pipe(ezs('debug'))
+            .pipe(ezs('ISTEXParseDotCorpus'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert(result.length > 0);
+                assert(result[0]);
+                assert.equal(result[0].publisher, 'CNRS');
+                done();
+            });
+    }).timeout(5000);
 });
 
 describe('Scroll', () => {
@@ -1053,6 +1059,26 @@ describe('Scroll', () => {
                 assert.equal(result.length, 2);
                 assert.equal(typeof result[0], 'object');
                 assert.equal(typeof result[1], 'object');
+                done();
+            });
+    });
+
+    it('should execute queries from input', (done) => {
+        const result = [];
+        from(['ezs', 'test'])
+            .pipe(ezs('Scroll', {
+                maxPage: 1,
+                size: 1,
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(typeof result[0], 'object');
+                assert.equal(typeof result[1], 'object');
+                assert.notDeepEqual(result[0], result[1]);
                 done();
             });
     });
