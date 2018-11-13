@@ -58,10 +58,16 @@ async function Scroll(data, feed) {
     if (nbPages > maxPage) {
         nbPages = maxPage;
     }
+    if (json.noMoreScrollResults) {
+        nbPages = 1;
+    }
     for (let i = 0; i < nbPages; i += 1) {
         const { nextScrollURI } = json;
         feed.write(json);
 
+        if (json.noMoreScrollResults) {
+            break;
+        }
         const res = await fetch(nextScrollURI);
         json = await res.json();
     }

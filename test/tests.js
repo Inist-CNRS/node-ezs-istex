@@ -1037,7 +1037,7 @@ describe('ISTEXParseDotCorpus', () => {
             });
     }).timeout(5000);
 
-    it.only('should parse query', (done) => {
+    it('should parse query', (done) => {
         const result = [];
         const corpus = fs.readFileSync(path.resolve(__dirname,
             './1query.corpus'));
@@ -1096,6 +1096,22 @@ describe('Scroll', () => {
                 assert.equal(typeof result[0], 'object');
                 assert.equal(typeof result[1], 'object');
                 assert.notDeepEqual(result[0], result[1]);
+                done();
+            });
+    });
+
+    it('should reply even only one result', (done) => {
+        const result = [];
+        from(['language.raw:rum'])
+            .pipe(ezs('Scroll', {
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(typeof result[0], 'object');
                 done();
             });
     });
