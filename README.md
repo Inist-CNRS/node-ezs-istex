@@ -34,7 +34,7 @@ ezs.use(require('ezs-istex'));
 -   [ISTEXRemoveVerb](#istexremoveverb)
     -   [Parameters](#parameters-7)
     -   [Examples](#examples-2)
--   [Scroll](#scroll)
+-   [ISTEXScroll](#istexscroll)
     -   [Parameters](#parameters-8)
 -   [ISTEXUniq](#istexuniq)
     -   [Examples](#examples-3)
@@ -176,8 +176,8 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### ISTEXRemoveIf
 
-Remove triples which properties are given (`remove`) if other given `property`
-has the given `value`.
+Remove triples which properties are given (`remove`) if other given
+`property` has the given `value`.
 
 #### Parameters
 
@@ -236,7 +236,7 @@ verb = <host/genre>
 <https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
 ```
 
-### Scroll
+### ISTEXScroll
 
 Take an `Object` containing a query and outputs records from the ISTEX API.
 
