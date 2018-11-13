@@ -3,8 +3,7 @@ import { PassThrough } from 'stream';
 import os from 'os';
 import queue from 'async.queue';
 import { writeTo } from './utils';
-import ISTEXSearch from './istex-search';
-import ISTEXScroll from './istex-scroll';
+import ISTEXScroll from './scroll';
 import ISTEXResult from './istex-result';
 import ISTEXFetch from './istex-fetch';
 
@@ -29,8 +28,7 @@ const getAndWriteQueries = (data, options, feed) => new Promise((resolve, reject
     data.forEach(query => q.push({ query }));
 
     return inputQuery
-        .pipe(ezs(ISTEXSearch, options))
-        .pipe(ezs(ISTEXScroll))
+        .pipe(ezs(ISTEXScroll, options))
         .pipe(ezs(ISTEXResult))
         .on('data', (chunk) => {
             feed.write(chunk);
