@@ -1,5 +1,4 @@
 import ISTEX from './istex';
-import ISTEXScroll from './istex-scroll';
 import ISTEXResult from './istex-result';
 import ISTEXFetch from './istex-fetch';
 import ISTEXSave from './istex-save';
@@ -12,7 +11,6 @@ import Scroll from './scroll';
 
 export default {
     ISTEX,
-    ISTEXScroll,
     ISTEXResult,
     ISTEXFetch,
     ISTEXSave,
