@@ -1036,7 +1036,7 @@ describe('test', () => {
     });
 });
 
-describe.only('Scroll', () => {
+describe('Scroll', () => {
     it('should respect maxPage', (done) => {
         const result = [];
         from(['this is a test'])
