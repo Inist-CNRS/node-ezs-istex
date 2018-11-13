@@ -64,7 +64,8 @@ describe('test', () => {
             .on('end', () => {
                 assert.equal(result.length, 2);
                 assert(result[0]);
-                assert.equal(result[0].id, '87699D0C20258C18259DED2A5E63B9A50F3B3363');
+                assert.equal(result[0].id,
+                    '87699D0C20258C18259DED2A5E63B9A50F3B3363');
                 assert.equal(result[1].ark[0], 'ark:/67375/QHD-T00H6VNF-0');
                 done();
             });
@@ -91,7 +92,8 @@ describe('test', () => {
             .on('end', () => {
                 assert.equal(result.length, 2);
                 assert(result[0]);
-                assert.equal(result[0].id, '87699D0C20258C18259DED2A5E63B9A50F3B3363');
+                assert.equal(result[0].id,
+                    '87699D0C20258C18259DED2A5E63B9A50F3B3363');
                 assert(result[1] instanceof Error);
                 done();
             });
@@ -581,7 +583,8 @@ describe('test', () => {
 
     it('ISTEXRemoveIf #0', (done) => {
         let result = [];
-        const corpus = fs.readFileSync(path.resolve(__dirname, './1notice.corpus'));
+        const corpus = fs.readFileSync(path.resolve(__dirname,
+            './1notice.corpus'));
         from([
             corpus.toString(),
         ])
@@ -930,25 +933,28 @@ describe('ISTEXUniq', () => {
             });
     });
 
-    it('should remove identical lines even if not following one another', (done) => {
-        let result = [];
-        from([
-            '<subject> <verb> <complement> .',
-            '<subject> <verb2> <complement2> .',
-            '<subject> <verb> <complement> .',
-        ])
-            .pipe(ezs('ISTEXUniq'))
-            // .pipe(ezs('debug'))
-            .on('data', (chunk) => {
-                result = result.concat(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 2);
-                assert.equal(result[0], '<subject> <verb> <complement> .\n');
-                assert.equal(result[1], '<subject> <verb2> <complement2> .\n');
-                done();
-            });
-    });
+    it('should remove identical lines even if not following one another',
+        (done) => {
+            let result = [];
+            from([
+                '<subject> <verb> <complement> .',
+                '<subject> <verb2> <complement2> .',
+                '<subject> <verb> <complement> .',
+            ])
+                .pipe(ezs('ISTEXUniq'))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 2);
+                    assert.equal(result[0],
+                        '<subject> <verb> <complement> .\n');
+                    assert.equal(result[1],
+                        '<subject> <verb2> <complement2> .\n');
+                    done();
+                });
+        });
 
     it('should remove identical lines in two different subjects', (done) => {
         let result = [];
@@ -975,36 +981,45 @@ describe('ISTEXUniq', () => {
             });
     });
 
-    it('should remove identical lines in two different subjects when verbs are different', (done) => {
-        let result = [];
-        from([
-            '<subject1> <verb> <complement> .',
-            '<subject1> <verb2> <complement2> .',
-            '<subject1> <verb> <complement> .',
-            '<subject2> <verb2> <complement> .',
-            '<subject2> <verb> <complement2> .',
-            '<subject2> <verb2> <complement> .',
-        ])
-            .pipe(ezs('ISTEXUniq'))
-            // .pipe(ezs('debug'))
-            .on('data', (chunk) => {
-                result = result.concat(chunk);
-            })
-            .on('end', () => {
-                assert.equal(result.length, 4);
-                assert.equal(result[0], '<subject1> <verb> <complement> .\n');
-                assert.equal(result[1], '<subject1> <verb2> <complement2> .\n');
-                assert.equal(result[2], '<subject2> <verb2> <complement> .\n');
-                assert.equal(result[3], '<subject2> <verb> <complement2> .\n');
-                done();
-            });
-    });
+    it(
+        'should remove identical lines in two different subjects '
+        + 'when verbs are different',
+        (done) => {
+            let result = [];
+            from([
+                '<subject1> <verb> <complement> .',
+                '<subject1> <verb2> <complement2> .',
+                '<subject1> <verb> <complement> .',
+                '<subject2> <verb2> <complement> .',
+                '<subject2> <verb> <complement2> .',
+                '<subject2> <verb2> <complement> .',
+            ])
+                .pipe(ezs('ISTEXUniq'))
+                // .pipe(ezs('debug'))
+                .on('data', (chunk) => {
+                    result = result.concat(chunk);
+                })
+                .on('end', () => {
+                    assert.equal(result.length, 4);
+                    assert.equal(result[0],
+                        '<subject1> <verb> <complement> .\n');
+                    assert.equal(result[1],
+                        '<subject1> <verb2> <complement2> .\n');
+                    assert.equal(result[2],
+                        '<subject2> <verb2> <complement> .\n');
+                    assert.equal(result[3],
+                        '<subject2> <verb> <complement2> .\n');
+                    done();
+                });
+        },
+    );
 });
 
 describe('ISTEXParseDotCorpus', () => {
-    it('ISTEXParseDotCorpus #0', (done) => {
+    it('should parse identifiers', (done) => {
         const result = [];
-        const corpus = fs.readFileSync(path.resolve(__dirname, './1notice.corpus'));
+        const corpus = fs.readFileSync(path.resolve(__dirname,
+            './1notice.corpus'));
         from([
             corpus.toString(),
         ])
@@ -1016,14 +1031,16 @@ describe('ISTEXParseDotCorpus', () => {
                 assert.equal(result.length, 1);
                 assert(result[0]);
                 assert.equal(result[0].publisher, 'CNRS');
-                assert.equal(result[0].id, '2FF3F5B1477986B9C617BB75CA3333DBEE99EB05');
+                assert.equal(result[0].id,
+                    '2FF3F5B1477986B9C617BB75CA3333DBEE99EB05');
                 done();
             });
     }).timeout(5000);
 
-    it('ISTEXParseDotCorpus #1', (done) => {
+    it.only('should parse query', (done) => {
         const result = [];
-        const corpus = fs.readFileSync(path.resolve(__dirname, './1query.corpus'));
+        const corpus = fs.readFileSync(path.resolve(__dirname,
+            './1query.corpus'));
         from([
             corpus.toString(),
         ])
