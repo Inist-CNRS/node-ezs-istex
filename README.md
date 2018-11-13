@@ -70,7 +70,9 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 -   **See: ISTEXScroll**
 
-Take `Object` containing results of ISTEX API, and returns `hits` value (documents).
+Take `Object` containing results of ISTEX API, and returns `hits` value
+(documents).
+
 This should be placed after ISTEXScroll.
 
 #### Parameters
