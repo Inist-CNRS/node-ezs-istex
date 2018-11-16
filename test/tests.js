@@ -892,4 +892,18 @@ describe('ISTEXScroll', () => {
                 done();
             });
     });
+
+    it('should go through the right number of pages', (done) => {
+        const result = [];
+        // ezs returns 2471 results (2018/11/16)
+        from(['ezs'])
+            .pipe(ezs('ISTEXScroll', { sid: 'test', size: 2000 }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                done();
+            });
+    });
 });
