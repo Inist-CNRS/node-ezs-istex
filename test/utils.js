@@ -57,5 +57,14 @@ describe('utils', () => {
             assert.equal(verb, '<verb>');
             assert.equal(complement, '"complement"');
         });
+
+        it('should parse literals containing >', () => {
+            const [subject, verb, complement] = getTriple(
+                '<subject> <verb> "comp > lement" .',
+            );
+            assert.equal(subject, '<subject>');
+            assert.equal(verb, '<verb>');
+            assert.equal(complement, '"comp > lement"');
+        });
     });
 });
