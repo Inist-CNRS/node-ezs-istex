@@ -93,7 +93,7 @@ async function ISTEX(data, feed) {
     const maxPage = this.getParam('maxPage');
     const size = this.getParam('size');
     const sid = this.getParam('sid');
-    const scroll = this.getParam('duration');
+    const duration = this.getParam('duration');
     const field = this.getParam('field');
     const query = this.getParam('query', data.query || []);
     const queries = Array.isArray(query) ? query : [query];
@@ -103,7 +103,7 @@ async function ISTEX(data, feed) {
         query,
         maxPage,
         size,
-        scroll,
+        duration,
         field,
         sid,
     };
