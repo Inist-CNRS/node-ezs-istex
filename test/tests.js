@@ -401,7 +401,6 @@ describe.skip('ISTEXRemoveIf', () => {
                     '^host/title -> https://data.istex.fr/fake#seriesTitle',
                 ],
             }))
-            .pipe(ezs('debug', {text:'triplify'}))
             .pipe(ezs('ISTEXRemoveIf', {
                 if: '<host/genre> = "journal"',
                 remove: [
@@ -648,7 +647,6 @@ describe.skip('ISTEXRemoveVerb', () => {
             '<subject> <verb> <complement>',
         ])
             .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-            // .pipe(ezs('debug'))
             .on('data', (chunk) => {
                 result = result.concat(chunk);
             })
@@ -665,7 +663,6 @@ describe.skip('ISTEXRemoveVerb', () => {
             '<subject> <verb2> <complement> .',
         ])
             .pipe(ezs('ISTEXRemoveVerb', { verb: '<verb>' }))
-            // .pipe(ezs('debug'))
             .on('data', (chunk) => {
                 result = result.concat(chunk);
             })
