@@ -280,7 +280,7 @@ describe('ISTEXTriplify', () => {
             });
     }).timeout(5000);
 
-    it('should not escape double quotes', (done) => {
+    it('should escape double quotes', (done) => {
         const result = [];
         from([
             {
@@ -831,6 +831,24 @@ describe('ISTEXUniq', () => {
                 assert.equal(result.length, 1);
                 assert.equal(result[0],
                     '<subject1> <verb> "Another Rigvedic Genitive Singular in -E > -AS?" .\n');
+                done();
+            });
+    });
+
+    it.only('should not mess up \\ character in literal', (done) => {
+        let result = [];
+        from([
+            '<subject1> <verb> "Kroi\\" .',
+        ])
+            .pipe(ezs('ISTEXUniq'))
+            .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result = result.concat(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(result[0],
+                    '<subject1> <verb> "Kroi\\\\" .\n');
                 done();
             });
     });
