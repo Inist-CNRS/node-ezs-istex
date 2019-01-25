@@ -17,20 +17,24 @@ ezs.use(require('ezs-istex'));
 
 -   [ISTEXFetch](#istexfetch)
     -   [Parameters](#parameters)
+    -   [Examples](#examples)
 -   [ISTEXParseDotCorpus](#istexparsedotcorpus)
+    -   [Examples](#examples-1)
 -   [ISTEXResult](#istexresult)
     -   [Parameters](#parameters-1)
 -   [ISTEXSave](#istexsave)
     -   [Parameters](#parameters-2)
 -   [ISTEXTriplify](#istextriplify)
     -   [Parameters](#parameters-3)
-    -   [Examples](#examples)
+    -   [Examples](#examples-2)
 -   [ISTEX](#istex)
     -   [Parameters](#parameters-4)
+    -   [Examples](#examples-3)
 -   [ISTEXScroll](#istexscroll)
     -   [Parameters](#parameters-5)
+    -   [Examples](#examples-4)
 -   [ISTEXUniq](#istexuniq)
-    -   [Examples](#examples-1)
+    -   [Examples](#examples-5)
 
 ### ISTEXFetch
 
@@ -43,12 +47,58 @@ Take `Object` with `id` and returns the document's metadata
 -   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX Identifier of a document (optional, default `data.id`)
 -   `sid` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User-agent identifier (optional, default `"ezs-istex"`)
 
+#### Examples
+
+Input:
+
+
+```javascript
+[{
+  id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
+}, {
+  id: 'ark:/67375/QHD-T00H6VNF-0',
+}]
+```
+
+will produce two JSON records.
+
+
+```javascript
+.pipe(ezs('ISTEXFetch', { source: 'id' }))
+```
+
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
 ### ISTEXParseDotCorpus
 
-Parse a `.corpus` file content, and returns an object containing queries and
-ids.
+Parse a `.corpus` file content, and execute the action contained in the
+`.corpus` file.
+
+#### Examples
+
+1query.corpus
+
+
+```javascript
+[ISTEX]
+query = language.raw:rum
+field = doi
+field = author
+field = title
+field = language
+field = publicationDate
+field = keywords
+field = host
+field = fulltext
+```
+
+1notice.corpus
+
+
+```javascript
+[ISTEX]
+id 2FF3F5B1477986B9C617BB75CA3333DBEE99EB05
+```
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -102,18 +152,25 @@ If the environment variable DEBUG is set, some errors could appear on stderr.
 
 #### Examples
 
+data:
+
+
 ```javascript
-data: {
-'author/0/name': 'Geoffrey Strickland',
-'author/0/affiliations/0': 'University of Reading',
-'host/issn/0': '0047-2441',
-'host/eissn/0': '1740-2379',
-'title': 'Maupassant, Zola, Jules Vallès and the Paris Commune of 1871',
-'publicationDate': '1983',
-'doi/0': '10.1177/004724418301305203',
-'id': 'F6CB7249E90BD96D5F7E3C4E80CC1C3FEE4FF483',
-'score': 1 }
+{
+  'author/0/name': 'Geoffrey Strickland',
+  'author/0/affiliations/0': 'University of Reading',
+  'host/issn/0': '0047-2441',
+  'host/eissn/0': '1740-2379',
+  'title': 'Maupassant, Zola, Jules Vallès and the Paris Commune of 1871',
+  'publicationDate': '1983',
+  'doi/0': '10.1177/004724418301305203',
+  'id': 'F6CB7249E90BD96D5F7E3C4E80CC1C3FEE4FF483',
+  'score': 1
+}
 ```
+
+javascript:
+
 
 ```javascript
 .pipe(ezs('ISTEXTriplify', {
@@ -125,6 +182,9 @@ data: {
    ],
  ));
 ```
+
+output:
+
 
 ```javascript
 <https://data.istex.fr/document/F6CB7249E90BD96D5F7E3C4E80CC1C3FEE4FF483>
@@ -150,20 +210,42 @@ Take an array and returns matching documents for every value of the array
 -   `duration` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** maximum duration between two requests (ex: "30s")
 -   `field` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** fields to output
 
+#### Examples
+
+```javascript
+.pipe(ezs('ISTEX', {
+  query: 'this is a test',
+  size: 3,
+  maxPage: 1,
+  sid: 'test'
+}))
+```
+
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
 ### ISTEXScroll
 
-Take an `Object` containing a query and outputs records from the ISTEX API.
+Take a string containing a query and outputs records from the ISTEX API.
 
 #### Parameters
 
--   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX query (optional, default `"*"`)
+-   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX query (optional, default `input`)
 -   `sid` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User-agent identifier (optional, default `"ezs-istex"`)
 -   `maxPage` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of pages to get
 -   `size` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** size of each page of results (optional, default `2000`)
 -   `duration` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** maximum duration between two requests (optional, default `"5m"`)
 -   `field` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** fields to get (optional, default `["doi"]`)
+
+#### Examples
+
+```javascript
+from(['this is a test'])
+  .pipe(ezs('ISTEXScroll', {
+      maxPage: 2,
+      size: 1,
+      sid: 'test',
+  }))
+```
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
@@ -177,6 +259,9 @@ triple of the same document.
 
 #### Examples
 
+Input:
+
+
 ```javascript
 <https://api.istex.fr/ark:/67375/NVC-JMPZTKTT-R> <http://purl.org/dc/terms/creator> "S Corbett" .
 <https://api.istex.fr/ark:/67375/NVC-JMPZTKTT-R> <https://data.istex.fr/ontology/istex#affiliation> "Department of Public Health, University of Sydney, Australia." .
@@ -184,9 +269,15 @@ triple of the same document.
 <https://api.istex.fr/ark:/67375/NVC-JMPZTKTT-R> <https://data.istex.fr/ontology/istex#affiliation> "Department of Public Health, University of Sydney, Australia." .
 ```
 
+Action in a `.ezs` script
+
+
 ```javascript
 [ISTEXUniq]
 ```
+
+Output
+
 
 ```javascript
 <https://api.istex.fr/ark:/67375/NVC-JMPZTKTT-R> <http://purl.org/dc/terms/creator> "S Corbett" .
