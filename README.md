@@ -28,16 +28,10 @@ ezs.use(require('ezs-istex'));
     -   [Examples](#examples)
 -   [ISTEX](#istex)
     -   [Parameters](#parameters-5)
--   [ISTEXRemoveIf](#istexremoveif)
-    -   [Parameters](#parameters-6)
-    -   [Examples](#examples-1)
--   [ISTEXRemoveVerb](#istexremoveverb)
-    -   [Parameters](#parameters-7)
-    -   [Examples](#examples-2)
 -   [ISTEXScroll](#istexscroll)
-    -   [Parameters](#parameters-8)
+    -   [Parameters](#parameters-6)
 -   [ISTEXUniq](#istexuniq)
-    -   [Examples](#examples-3)
+    -   [Examples](#examples-1)
 
 ### ISTEXFetch
 
@@ -173,68 +167,6 @@ Take an array and returns matching documents for every value of the array
 -   `field` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** fields to output
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
-
-### ISTEXRemoveIf
-
-Remove triples which properties are given (`remove`) if other given
-`property` has the given `value`.
-
-#### Parameters
-
--   `if` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** "property = value"
-
-#### Examples
-
-```javascript
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/ontology/istex#idIstex> "2FF3F5B1477986B9C617BB75CA3333DBEE99EB05" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> a <http://purl.org/ontology/bibo/Document> .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <host/genre> "journal" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#bookTitle> "Linguistic Typology" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#seriesTitle> "Linguistic Typology" .
-```
-
-```javascript
-[ISTEXRemoveIf]
-if = <host/genre> = "journal"
-remove = <https://data.istex.fr/fake#bookTitle>
-remove = <https://data.istex.fr/fake#seriesTitle>
-remove = <host/genre>
-```
-
-```javascript
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/ontology/istex#idIstex> "2FF3F5B1477986B9C617BB75CA3333DBEE99EB05" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> a <http://purl.org/ontology/bibo/Document> .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
-```
-
-### ISTEXRemoveVerb
-
-Unconditionnaly remove triples which `verb` is given.
-
-#### Parameters
-
--   `verb` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** `"<https://data.istex.fr/ontology/istex#idIstex>"`
-
-#### Examples
-
-```javascript
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/ontology/istex#idIstex> "2FF3F5B1477986B9C617BB75CA3333DBEE99EB05" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> a <http://purl.org/ontology/bibo/Document> .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <host/genre> "journal" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
-```
-
-```javascript
-[ISTEXRemoveIf]
-verb = <host/genre>
-```
-
-```javascript
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/ontology/istex#idIstex> "2FF3F5B1477986B9C617BB75CA3333DBEE99EB05" .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> a <http://purl.org/ontology/bibo/Document> .
-<https://api.istex.fr/ark:/67375/QT4-D0J6VN6K-K> <https://data.istex.fr/fake#journalTitle> "Linguistic Typology" .
-```
 
 ### ISTEXScroll
 
