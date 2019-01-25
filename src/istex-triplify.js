@@ -3,6 +3,7 @@
  *
  * If the environment variable DEBUG is set, some errors could appear on stderr.
  *
+ * @name ISTEXTriplify
  * @see ISTEXResult
  * @see OBJFlatten (from ezs-basics)
  *

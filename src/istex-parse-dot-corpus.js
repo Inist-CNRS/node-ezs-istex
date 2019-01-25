@@ -5,6 +5,7 @@ import { writeTo } from './utils';
  * Parse a `.corpus` file content, and returns an object containing queries and
  * ids.
  *
+ * @name ISTEXParseDotCorpus
  * @returns {Object}
  */
 function ISTEXParseDotCorpus(data, feed) {

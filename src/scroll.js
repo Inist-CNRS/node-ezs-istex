@@ -6,6 +6,7 @@ import fetch from 'fetch-with-proxy';
 /**
  * Take an `Object` containing a query and outputs records from the ISTEX API.
  *
+ * @name ISTEXScroll
  * @param {string} [query="*"]          ISTEX query
  * @param {string} [sid="ezs-istex"]    User-agent identifier
  * @param {number} maxPage              Maximum number of pages to get

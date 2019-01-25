@@ -18,18 +18,17 @@ ezs.use(require('ezs-istex'));
 -   [ISTEXFetch](#istexfetch)
     -   [Parameters](#parameters)
 -   [ISTEXParseDotCorpus](#istexparsedotcorpus)
-    -   [Parameters](#parameters-1)
 -   [ISTEXResult](#istexresult)
-    -   [Parameters](#parameters-2)
+    -   [Parameters](#parameters-1)
 -   [ISTEXSave](#istexsave)
-    -   [Parameters](#parameters-3)
+    -   [Parameters](#parameters-2)
 -   [ISTEXTriplify](#istextriplify)
-    -   [Parameters](#parameters-4)
+    -   [Parameters](#parameters-3)
     -   [Examples](#examples)
 -   [ISTEX](#istex)
-    -   [Parameters](#parameters-5)
+    -   [Parameters](#parameters-4)
 -   [ISTEXScroll](#istexscroll)
-    -   [Parameters](#parameters-6)
+    -   [Parameters](#parameters-5)
 -   [ISTEXUniq](#istexuniq)
     -   [Examples](#examples-1)
 
@@ -39,8 +38,6 @@ Take `Object` with `id` and returns the document's metadata
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `source` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Field to use to fetch documents (optional, default `"id"`)
 -   `target` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `id` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX Identifier of a document (optional, default `data.id`)
@@ -52,11 +49,6 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 Parse a `.corpus` file content, and returns an object containing queries and
 ids.
-
-#### Parameters
-
--   `data`  
--   `feed`  
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -71,8 +63,6 @@ This should be placed after ISTEXScroll.
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `source` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `data`)
 -   `target` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**  (optional, default `feed`)
 
@@ -88,8 +78,6 @@ ISTEXFetch produces the stream you need to save the file.
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `directory` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** path for the PDFs (optional, default `currentworkingdirectory`)
 -   `typology` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** typology of the document to save (optional, default `"fulltext"`)
 -   `format` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** format of the files to save (optional, default `"pdf"`)
@@ -109,8 +97,6 @@ If the environment variable DEBUG is set, some errors could appear on stderr.
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `property` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** path to uri for the properties to output (property and uri separated by `->`) (optional, default `[]`)
 -   `source` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** the root of the keys (ex: `istex/`) (optional, default `""`)
 
@@ -157,8 +143,6 @@ Take an array and returns matching documents for every value of the array
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `query` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** ISTEX query (or queries) (optional, default `data.query||[]`)
 -   `id` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>)** ISTEX id (or ids) (optional, default `data.id||[]`)
 -   `maxPage` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** maximum number of pages to get
@@ -174,8 +158,6 @@ Take an `Object` containing a query and outputs records from the ISTEX API.
 
 #### Parameters
 
--   `data`  
--   `feed`  
 -   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX query (optional, default `"*"`)
 -   `sid` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User-agent identifier (optional, default `"ezs-istex"`)
 -   `maxPage` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of pages to get

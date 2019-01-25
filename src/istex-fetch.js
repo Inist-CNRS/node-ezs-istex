@@ -7,6 +7,7 @@ import { newValue } from './utils';
 /**
  * Take `Object` with `id` and returns the document's metadata
  *
+ * @name ISTEXFetch
  * @param {string} [source="id"]    Field to use to fetch documents
  * @param {string} target
  * @param {string} [id=data.id]     ISTEX Identifier of a document
