@@ -301,7 +301,7 @@ describe('ISTEXTriplify', () => {
             .on('end', () => {
                 assert.equal(result.length, 3);
                 assert(!result[2].includes('undefined'));
-                assert.equal(result[2], '<https://api.istex.fr/ark:/fake> <https://data.istex.fr/ontlogy/istex#affiliation> "E-mail: \\"ivan.couee@univ-rennes1.fr\\"" .\n');
+                assert.equal(result[2], '<https://api.istex.fr/ark:/fake> <https://data.istex.fr/ontology/istex#affiliation> "E-mail: \\"ivan.couee@univ-rennes1.fr\\"" .\n');
                 done();
             });
     }).timeout(5000);
