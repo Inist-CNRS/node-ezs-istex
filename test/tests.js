@@ -698,3 +698,18 @@ describe('ISTEXScroll', () => {
             });
     });
 });
+
+describe.only('ISTEXUnzip', () => {
+    it('should get 10 elements', (done) => {
+        const result = [];
+        fs.createReadStream('./examples/data/istex-subset-2019-03-15-10.zip')
+            .pipe(ezs('ISTEXUnzip'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 10);
+                done();
+            });
+    });
+});
