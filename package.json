@@ -60,7 +60,7 @@
         "eslint-config-airbnb": "17.1.0",
         "eslint-config-airbnb-base": "13.1.0",
         "eslint-plugin-import": "2.16.0",
-        "eslint-plugin-jsx-a11y": "6.1.2",
+        "eslint-plugin-jsx-a11y": "6.2.1",
         "eslint-plugin-react": "7.11.1",
         "ezs": "8.1.2",
         "ezs-basics": "3.7.0",
