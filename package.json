@@ -63,7 +63,7 @@
         "eslint-plugin-jsx-a11y": "6.1.2",
         "eslint-plugin-react": "7.11.1",
         "ezs": "8.1.2",
-        "ezs-basics": "3.6.7",
+        "ezs-basics": "3.7.0",
         "from": "0.1.7",
         "istanbul": "0.4.5",
         "mocha": "5.2.0"
