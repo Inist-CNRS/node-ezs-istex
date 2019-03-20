@@ -66,8 +66,4 @@ export default function ISTEXUnzip(data, feed) {
     return 1;
 }
 
-// export default {
-//     ISTEXUnzip,
-// };
-
 // See https://github.com/touv/node-ezs/blob/master/src/statements/delegate.js
