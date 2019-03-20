@@ -699,7 +699,7 @@ describe('ISTEXScroll', () => {
     });
 });
 
-describe.only('ISTEXUnzip', () => {
+describe('ISTEXUnzip', () => {
     it('should get 10 elements', (done) => {
         const result = [];
         fs.createReadStream('./examples/data/istex-subset-2019-03-15-10.zip')
@@ -768,6 +768,7 @@ describe.only('ISTEXUnzip', () => {
                 assert.equal(typeof result[9], 'object');
                 assert.equal(result[9].arkIstex, 'ark:/67375/0T8-SLF4HPPC-X');
                 assert.equal(result[9].title,
+                    // eslint-disable-next-line max-len
                     'Breath acetone concentration decreases with blood glucose concentration in type I diabetes mellitus patients during hypoglycaemic clamps');
                 assert.equal(result[9].language[0], 'eng');
                 assert.equal(result[9].publicationDate, '2009');
