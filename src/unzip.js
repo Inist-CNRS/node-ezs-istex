@@ -12,7 +12,7 @@ function writeTo(stream, data, cb) {
 }
 
 /**
- * Take the content of a zip file, extract JSON files, and yields JSON objects.
+ * Take the content of a zip file, extract JSON files, and yield JSON objects.
  *
  * The zip file comes from dl.istex.fr, and the `manifest.json` is not
  * extracted.
@@ -21,7 +21,6 @@ function writeTo(stream, data, cb) {
  * @returns Array<Object>
  */
 export default function ISTEXUnzip(data, feed) {
-    const { ezs } = this;
     if (this.isFirst()) {
         this.input = new PassThrough({ objectMode: true });
 
