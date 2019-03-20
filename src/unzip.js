@@ -12,7 +12,7 @@ function writeTo(stream, data, cb) {
 }
 
 /**
- * Take the content of a zip file, and extract JSON files.
+ * Take the content of a zip file, extract JSON files, and yields JSON objects.
  *
  * The zip file comes from dl.istex.fr, and the `manifest.json` is not
  * extracted.
