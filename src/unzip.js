@@ -32,14 +32,21 @@ export default function ISTEXUnzip(data, feed) {
                 if (fileName === 'manifest.json') {
                     entry.autodrain();
                 } else if (fileName.endsWith('.json')) {
-                    feed.write(fileName);
-                    // TODO extract content // And maybe remove autodrain
-                    entry.autodrain();
+                    let str = '';
+                    entry
+                        .pipe(ezs(function uncompress(data2, feed2) {
+                            if (this.isLast()) {
+                                const obj = JSON.parse(str);
+                                feed.write(obj);
+                                return feed2.close();
+                            }
+                            str += data2.toString();
+                            return feed2.end();
+                        }));
                 } else {
                     entry.autodrain();
                 }
             })
-            // .pipe(ezs.catch(e => feed.write(e))) // FIXME: prevents feed to be closed
             .on('error', e => feed.write(e))
             .on('data', d => feed.write(d));
 
@@ -54,7 +61,6 @@ export default function ISTEXUnzip(data, feed) {
             .catch(e => feed.stop(e));
         this.input.end();
     } else {
-        console.error(`Unzip chunk #${this.getIndex()}`);
         writeTo(this.input, data, () => feed.end());
     }
     return 1;
