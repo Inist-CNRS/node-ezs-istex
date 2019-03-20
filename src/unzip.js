@@ -1,15 +1,6 @@
 import { PassThrough } from 'stream';
 import unzipper from 'unzipper';
-
-function writeTo(stream, data, cb) {
-    const check = stream.write(data);
-    if (!check) {
-        stream.once('drain', cb);
-    } else {
-        process.nextTick(cb);
-    }
-    return check;
-}
+import { writeTo } from './utils';
 
 /**
  * Take the content of a zip file, extract JSON files, and yield JSON objects.
