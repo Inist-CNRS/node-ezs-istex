@@ -51,7 +51,6 @@ export default function ISTEXUnzip(data, feed) {
     } else {
         writeTo(this.input, data, () => feed.end());
     }
-    return 1;
 }
 
 // See https://github.com/touv/node-ezs/blob/master/src/statements/delegate.js
