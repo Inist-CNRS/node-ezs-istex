@@ -47,6 +47,7 @@
         "is-stream": "1.1.0",
         "qs": "6.6.0",
         "ramda": "0.26.1",
+        "unzipper": "0.9.11",
         "write": "1.0.3"
     },
     "devDependencies": {
