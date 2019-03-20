@@ -704,6 +704,21 @@ describe.only('ISTEXUnzip', () => {
         const result = [];
         fs.createReadStream('./examples/data/istex-subset-2019-03-15-10.zip')
             .pipe(ezs('ISTEXUnzip'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('error', done)
+            .on('end', () => {
+                assert.equal(result.length, 10);
+                done();
+            });
+    });
+
+    it('should get JSON objects', (done) => {
+        const result = [];
+        fs.createReadStream('./examples/data/istex-subset-2019-03-15-10.zip')
+            .pipe(ezs('ISTEXUnzip'))
             .pipe(ezs('debug'))
             .on('data', (chunk) => {
                 result.push(chunk);
@@ -711,6 +726,7 @@ describe.only('ISTEXUnzip', () => {
             .on('error', done)
             .on('end', () => {
                 assert.equal(result.length, 10);
+                assert.equal(typeof result[0], 'object');
                 done();
             });
     });
