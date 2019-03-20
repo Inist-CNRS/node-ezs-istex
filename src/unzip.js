@@ -34,15 +34,13 @@ export default function ISTEXUnzip(data, feed) {
                 } else if (fileName.endsWith('.json')) {
                     let str = '';
                     entry
-                        .pipe(ezs(function uncompress(data2, feed2) {
-                            if (this.isLast()) {
-                                const obj = JSON.parse(str);
-                                feed.write(obj);
-                                return feed2.close();
-                            }
-                            str += data2.toString();
-                            return feed2.end();
-                        }));
+                        .on('data', (buf) => {
+                            str += buf.toString();
+                        })
+                        .on('end', () => {
+                            const obj = JSON.parse(str);
+                            feed.write(obj);
+                        });
                 } else {
                     entry.autodrain();
                 }
