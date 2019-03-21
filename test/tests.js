@@ -777,4 +777,26 @@ describe('ISTEXUnzip', () => {
                 done();
             });
     });
+
+    it('should work on 1000 elements', (done) => {
+        const result = [];
+        fs.createReadStream('./examples/data/istex-subset-2019-03-15-1000.zip')
+            .pipe(ezs('ISTEXUnzip'))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('error', done)
+            .on('end', () => {
+                assert.equal(result.length, 1000);
+                assert.equal(typeof result[999], 'object');
+                assert.equal(result[999].arkIstex, 'ark:/67375/QHD-X7WSJP9K-C');
+                assert.equal(result[999].title, 'Physiological chemistry');
+                assert.equal(result[999].language[0], 'eng');
+                assert.equal(result[999].publicationDate, '1894');
+                assert.equal(result[999].corpusName, 'rsc-journals');
+                assert.equal(result[999].qualityIndicators.score, 2.699);
+                done();
+            });
+    }).timeout(4000);
 });
