@@ -699,7 +699,7 @@ describe('ISTEXScroll', () => {
     }).timeout(5000);
 });
 
-describe('ISTEXScrollMerge', () => {
+describe.only('ISTEXScrollMerge', () => {
     it('should respect maxPage', (done) => {
         const result = [];
         from([{ query: 'this is a test' }])
@@ -738,7 +738,7 @@ describe('ISTEXScrollMerge', () => {
                 assert.notDeepEqual(result[0], result[1]);
                 done();
             });
-    });
+    }).timeout(5000);
 
     it('should reply even only one result', (done) => {
         const result = [];
@@ -812,7 +812,7 @@ describe('ISTEXScrollMerge', () => {
                 assert.equal(result[1].lodex.uri, 'https://api.istex.fr/ark');
                 done();
             });
-    });
+    }).timeout(5000);
 });
 
 describe('ISTEXUnzip', () => {
