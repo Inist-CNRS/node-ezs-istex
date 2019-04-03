@@ -30,14 +30,11 @@ ezs.use(require('ezs-istex'));
 -   [ISTEX](#istex)
     -   [Parameters](#parameters-4)
     -   [Examples](#examples-3)
--   [ISTEXScrollMerge](#istexscrollmerge)
+-   [ISTEXScroll](#istexscroll)
     -   [Parameters](#parameters-5)
     -   [Examples](#examples-4)
--   [ISTEXScroll](#istexscroll)
-    -   [Parameters](#parameters-6)
-    -   [Examples](#examples-5)
 -   [ISTEXUniq](#istexuniq)
-    -   [Examples](#examples-6)
+    -   [Examples](#examples-5)
 -   [ISTEXUnzip](#istexunzip)
 
 ### ISTEXFetch
@@ -227,9 +224,9 @@ Take an array and returns matching documents for every value of the array
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
-### ISTEXScrollMerge
+### ISTEXScroll
 
-Take a object containing a query string field and output records from the
+Take an object containing a query string field and output records from the
 ISTEX API. Every output record is merged with the input object.
 
 #### Parameters
@@ -245,32 +242,6 @@ ISTEX API. Every output record is merged with the input object.
 
 ```javascript
 from([{ query: 'this is a test' }])
-  .pipe(ezs('ISTEXScrollMerge', {
-      maxPage: 2,
-      size: 1,
-      sid: 'test',
-  }))
-```
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
-
-### ISTEXScroll
-
-Take a string containing a query and outputs records from the ISTEX API.
-
-#### Parameters
-
--   `query` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** ISTEX query (optional, default `input`)
--   `sid` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** User-agent identifier (optional, default `"ezs-istex"`)
--   `maxPage` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Maximum number of pages to get
--   `size` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** size of each page of results (optional, default `2000`)
--   `duration` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** maximum duration between two requests (optional, default `"5m"`)
--   `field` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** fields to get (optional, default `["doi"]`)
-
-#### Examples
-
-```javascript
-from(['this is a test'])
   .pipe(ezs('ISTEXScroll', {
       maxPage: 2,
       size: 1,
