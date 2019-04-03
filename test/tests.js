@@ -770,7 +770,7 @@ describe('ISTEXScrollMerge', () => {
             });
     }).timeout(5000);
 
-    it('should merge initial object and response', (done) => {
+    it('should merge initial object and response in first object', (done) => {
         const result = [];
         from([{
             lodex: {
@@ -788,6 +788,28 @@ describe('ISTEXScrollMerge', () => {
                 assert.equal(result[0].query, 'language.raw:rum');
                 assert.ok(result[0].lodex);
                 assert.equal(result[0].lodex.uri, 'https://api.istex.fr/ark');
+                done();
+            });
+    });
+
+    it('should merge initial object and response in second object', (done) => {
+        const result = [];
+        from([{
+            lodex: {
+                uri: 'https://api.istex.fr/ark',
+            },
+            query: 'ezs',
+        }])
+            .pipe(ezs('ISTEXScrollMerge', { sid: 'test', size: 2000 }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(typeof result[1], 'object');
+                assert.equal(result[1].query, 'ezs');
+                assert.ok(result[1].lodex);
+                assert.equal(result[1].lodex.uri, 'https://api.istex.fr/ark');
                 done();
             });
     });
