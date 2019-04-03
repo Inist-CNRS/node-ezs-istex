@@ -4,16 +4,17 @@ import QueryString from 'qs';
 import fetch from 'fetch-with-proxy';
 
 /**
- * Take a string containing a query and outputs records from the ISTEX API.
+ * Take a object containing a query string field and output records from the
+ * ISTEX API. Every output record is merged with the input object.
  *
  * @example
  * from([{ query: 'this is a test' }])
- *   .pipe(ezs('ISTEXScroll', {
+ *   .pipe(ezs('ISTEXScrollMerge', {
  *       maxPage: 2,
  *       size: 1,
  *       sid: 'test',
  *   }))
- * @name ISTEXScroll
+ * @name ISTEXScrollMerge
  * @param {string} [query=input]          ISTEX query
  * @param {string} [sid="ezs-istex"]    User-agent identifier
  * @param {number} maxPage              Maximum number of pages to get
