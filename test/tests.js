@@ -699,6 +699,100 @@ describe('ISTEXScroll', () => {
     }).timeout(5000);
 });
 
+describe('ISTEXScrollMerge', () => {
+    it('should respect maxPage', (done) => {
+        const result = [];
+        from([{ query: 'this is a test' }])
+            .pipe(ezs('ISTEXScrollMerge', {
+                maxPage: 2,
+                size: 1,
+                sid: 'test',
+            }))
+            // .pipe(ezs('debug'))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(typeof result[0], 'object');
+                assert.equal(typeof result[1], 'object');
+                done();
+            });
+    }).timeout(5000);
+
+    it('should execute queries from input', (done) => {
+        const result = [];
+        from([{ query: 'ezs' }, { query: 'test' }])
+            .pipe(ezs('ISTEXScrollMerge', {
+                maxPage: 1,
+                size: 1,
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                assert.equal(typeof result[0], 'object');
+                assert.equal(typeof result[1], 'object');
+                assert.notDeepEqual(result[0], result[1]);
+                done();
+            });
+    });
+
+    it('should reply even only one result', (done) => {
+        const result = [];
+        from([{ query: 'language.raw:rum' }])
+            .pipe(ezs('ISTEXScrollMerge', {
+                sid: 'test',
+            }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(typeof result[0], 'object');
+                done();
+            });
+    });
+
+    it('should go through the right number of pages', (done) => {
+        const result = [];
+        // ezs returns 2471 results (2018/11/16)
+        from([{ query: 'ezs' }])
+            .pipe(ezs('ISTEXScrollMerge', { sid: 'test', size: 2000 }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 2);
+                done();
+            });
+    }).timeout(5000);
+
+    it('should merge initial object and response', (done) => {
+        const result = [];
+        from([{
+            lodex: {
+                uri: 'https://api.istex.fr/ark',
+            },
+            query: 'language.raw:rum',
+        }])
+            .pipe(ezs('ISTEXScrollMerge', { sid: 'test' }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 1);
+                assert.equal(typeof result[0], 'object');
+                assert.equal(result[0].query, 'language.raw:rum');
+                assert.ok(result[0].lodex);
+                assert.equal(result[0].lodex.uri, 'https://api.istex.fr/ark');
+                done();
+            });
+    });
+});
+
 describe('ISTEXUnzip', () => {
     it('should get 10 elements', (done) => {
         const result = [];
