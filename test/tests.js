@@ -886,3 +886,40 @@ describe('ISTEXFacet', () => {
             });
     }).timeout(10000);
 });
+
+describe.only('ISTEXFiles', () => {
+    it('should return files', (done) => {
+        const result = [];
+        from([
+            {
+                id: '87699D0C20258C18259DED2A5E63B9A50F3B3363',
+            },
+            {
+                id: 'ark:/67375/QHD-T00H6VNF-0',
+            },
+
+        ])
+            .pipe(ezs('ISTEXFetch', {
+                source: 'id',
+                sid: 'test',
+                token,
+            }))
+            .pipe(ezs('ISTEXFiles', { fulltext: 'tei', record: 'mods' }))
+            .pipe(ezs('ISTEXFilesCheck', { sid: 'test', token }))
+            .on('data', (chunk) => {
+                result.push(chunk);
+            })
+            .on('end', () => {
+                assert.equal(result.length, 4);
+                assert(result[0].source);
+                assert(result[0].stream);
+                assert(result[1].source);
+                assert(result[1].stream);
+                assert(result[2].source);
+                assert(result[2].stream);
+                assert(result[3].source);
+                assert(result[3].stream);
+                done();
+            });
+    }).timeout(10000);
+});
