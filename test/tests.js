@@ -919,7 +919,7 @@ describe('ISTEXFacet', () => {
     }).timeout(10000);
 });
 
-describe.only('ISTEXFiles', () => {
+describe('ISTEXFiles', () => {
     it('should return files & content', (done) => {
         const result = [];
         from([
