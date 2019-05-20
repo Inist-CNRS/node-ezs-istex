@@ -6,14 +6,17 @@ const add2archive = (archive, { content, name }) => {
         archive.append(content, { name });
         return true;
     }
-    return false;
+    throw new Error(
+        '[ISTEXFilesContent] should be defined'
+        + ' before this statement.',
+    );
 };
 /**
- * Take and Object with ISTEX `stream` and wrap inta un single zip
+ * Take and Object with ISTEX `stream` and wrap into a single zip
  *
  * @name ISTEXFilesWrap
  * @see ISTEXFiles
- * @returns {Array}
+ * @returns {Buffer}
  */
 function ISTEXFilesWrap(data, feed) {
     const format = this.getParam('format', 'zip');

@@ -1,14 +1,13 @@
 import URL from 'url';
-import InistARK from 'inist-ark';
 
-const ark = new InistARK();
 /**
- * Take and Object with ISTEX `id` and genrate objetc for each files
+ * Take an Object with ISTEX `id` and generate an object for each file
  *
  * @name ISTEXFiles
  * @see ISTEXScroll
  * @param {string} [fulltext=pdf]    typology of the document to save
- * @param {string} [metadata=mods]   format of the files to save
+ * @param {string} [metadata=json]   format of the files to save
+ * @param {string} [enrichment]   enrichment of the document to save
  * @param {string} [sid="ezs-istex"]  User-agent identifier
  * @returns {Array}
  */
@@ -38,29 +37,26 @@ function ISTEXFiles(data, feed) {
     }
 
     const identifiers = data.hits ? data.hits : [data];
-    identifiers.map(({ id, arkIstex }) => {
-        const { name: arkName } = ark.parse(arkIstex);
-        return [
-            ...enrichments.filter(Boolean).map(enri => `${arkIstex}/enrichment.${enri}`),
-            ...typologies.filter(Boolean).map(typo => `${arkIstex}/fulltext.${typo}`),
-            ...records.map(form => `${arkIstex}/record.${form}`),
-        ].forEach((pathname) => {
-            const urlObj = {
-                ...location,
-                pathname,
-                query: {
-                    sid,
-                },
-            };
-            const cmdObj = {
-                id,
-                arkIstex,
-                name: pathname.replace('ark:', ''),
-                source: URL.format(urlObj),
-            };
-            feed.write(cmdObj);
-        });
-    });
+    identifiers.map(({ id, arkIstex }) => [
+        ...enrichments.filter(Boolean).map(extension => `${arkIstex}/enrichment.${extension}`),
+        ...typologies.filter(Boolean).map(extension => `${arkIstex}/fulltext.${extension}`),
+        ...records.map(extension => `${arkIstex}/record.${extension}`),
+    ].forEach((pathname) => {
+        const urlObj = {
+            ...location,
+            pathname,
+            query: {
+                sid,
+            },
+        };
+        const cmdObj = {
+            id,
+            arkIstex,
+            name: pathname.replace('ark:', ''),
+            source: URL.format(urlObj),
+        };
+        feed.write(cmdObj);
+    }));
     feed.end();
 }
 
