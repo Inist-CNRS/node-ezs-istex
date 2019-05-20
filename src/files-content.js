@@ -2,7 +2,7 @@ import fetch from 'fetch-with-proxy';
 import getStream from 'get-stream';
 
 /**
- * Take and Object with ISTEX `source` and check the document's file.
+ * Take an Object with ISTEX `source` and check the document's file.
  * Warning: to access fulltext, you have to give a `token` parameter.
  * ISTEXFetch produces the stream you need to save the file.
  *
