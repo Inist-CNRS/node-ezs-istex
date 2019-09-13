@@ -1,6 +1,8 @@
 # ISTEX statements for ezs
 
 > **Warning**: the package has been renamed to [@ezs/istex](https://github.com/Inist-CNRS/ezs/tree/master/packages/istex#readme).
+>
+> It will no more be maintained here, but in the [Inist-CNRS/ezs](https://github/Inist-CNRS/ezs/tree/master/packages/sparql) repository.
 
 This package cannot be used alone. EZS has to be installed.
 
