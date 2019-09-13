@@ -1,5 +1,7 @@
 # ISTEX statements for ezs
 
+> **Warning**: the package has been renamed to [@ezs/istex](https://github.com/Inist-CNRS/ezs/packages/istex#readme).
+
 This package cannot be used alone. EZS has to be installed.
 
 ## Usage
